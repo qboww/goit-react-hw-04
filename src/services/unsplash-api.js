@@ -1,21 +1,23 @@
 import axios from "axios";
 
-export async function fetchImages(query, page) {
+async function fetchImages(searchQuery, page) {
   const API_KEY = import.meta.env.VITE_REACT_APP_UNSPLAH_API_KEY;
-  const baseUrl = "https://api.unsplash.com/photos";
+  const baseUrl = "https://api.unsplash.com/search/photos/";
 
   const params = new URLSearchParams({
+    query: searchQuery,
     client_id: API_KEY,
     per_page: 12,
-    query: query,
     page: page,
   });
 
   try {
     const response = await axios.get(`${baseUrl}?${params}`);
-    return response.data;
+    return response.data.results;
   } catch (error) {
     console.log(error);
-    return [];
   }
 }
+
+
+export default fetchImages;
