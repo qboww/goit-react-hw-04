@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function fetchImages(query, page) {
-  const API_KEY = "sjjAXzd3zTnGtsxie_NxE7xY8U10V--ubX_i4yWzanA";
+  const API_KEY = import.meta.env.VITE_REACT_APP_UNSPLAH_API_KEY;
   const baseUrl = "https://api.unsplash.com/photos";
 
   const params = new URLSearchParams({
