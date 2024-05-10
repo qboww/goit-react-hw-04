@@ -19,5 +19,4 @@ async function fetchImages(searchQuery, page) {
   }
 }
 
-
 export default fetchImages;

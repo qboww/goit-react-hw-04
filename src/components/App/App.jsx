@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+
 import fetchImages from "../../services/unsplash-api";
+
 import SearchBar from "../SearchBar/SearchBar";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Loader from "../Loader/Loader";
@@ -53,15 +55,15 @@ const App = () => {
   };
 
   const openModal = (image) => {
-    setModalIsOpen(true);
     setSelectedImage(image);
+    setModalIsOpen(true);
   };
 
   return (
     <div className="container">
       <SearchBar onSubmit={handleSubmit} />
-      {error && <ErrorMessage message={error} />}
-      <ImageGallery images={images} onLoadMore={openModal} />
+      <ImageGallery images={images} openModal={openModal} />
+      {loadState && <Loader />}
       {images.length > 0 && <LoadMoreBtn onLoadMore={loadMoreImages} />}
       {modalIsOpen && (
         <ImageModal
@@ -70,7 +72,7 @@ const App = () => {
           image={selectedImage}
         />
       )}
-      {loadState && <Loader />}
+      {error && <ErrorMessage message={error} />}
     </div>
   );
 };
