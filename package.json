@@ -12,15 +12,11 @@
   },
   "dependencies": {
     "@fontsource/inter-tight": "^5.0.20",
-    "clsx": "^2.1.1",
-    "formik": "^2.4.6",
+    "axios": "^1.6.8",
     "modern-normalize": "^2.0.0",
-    "nanoid": "^5.0.7",
     "prettier": "^3.2.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^5.2.0",
-    "yup": "^1.4.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
