@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import fetchImages from "../../services/unsplash-api";
 import SearchBar from "../SearchBar/SearchBar";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
@@ -16,32 +16,35 @@ const App = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const handleSubmit = async (searchQuery) => {
-    setPage(1);
-    setLoadState(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoadState(true);
+      try {
+        const data = await fetchImages(query, page);
+        if (page === 1) {
+          setImages(data);
+        } else {
+          setImages([...images, ...data]);
+        }
+        setLoadState(false);
+      } catch (error) {
+        setError("Error fetching images.");
+        setLoadState(false);
+      }
+    };
 
-    try {
-      const data = await fetchImages(searchQuery, 1);
-      setImages(data);
-      setQuery(searchQuery);
-      setLoadState(false);
-    } catch (error) {
-      setError("Error fetching images.");
-      setLoadState(false);
+    if (query !== "") {
+      fetchData();
     }
+  }, [query, page]);
+
+  const handleSubmit = (searchQuery) => {
+    setQuery(searchQuery);
+    setPage(1);
   };
 
-  const loadMoreImages = async () => {
+  const loadMoreImages = () => {
     setPage(page + 1);
-    setLoadState(true);
-    try {
-      const data = await fetchImages(query, page + 1);
-      setImages([...images, ...data]);
-      setLoadState(false);
-    } catch (error) {
-      setError("Error fetching images.");
-      setLoadState(false);
-    }
   };
 
   const closeModal = () => {
@@ -58,11 +61,7 @@ const App = () => {
     <div className="container">
       <SearchBar onSubmit={handleSubmit} />
       {error && <ErrorMessage message={error} />}
-      {loadState ? (
-        <Loader />
-      ) : (
-        <ImageGallery images={images} onLoadMore={openModal} />
-      )}
+      <ImageGallery images={images} onLoadMore={openModal} />
       {images.length > 0 && <LoadMoreBtn onLoadMore={loadMoreImages} />}
       {modalIsOpen && (
         <ImageModal
@@ -71,6 +70,7 @@ const App = () => {
           image={selectedImage}
         />
       )}
+      {loadState && <Loader />}
     </div>
   );
 };

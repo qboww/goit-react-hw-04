@@ -1,28 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
+import { Formik, Form, Field } from "formik";
+import css from "./SearchBar.module.css";
 
 const SearchBar = ({ onSubmit }) => {
-  const [query, setQuery] = useState("");
-
-  const handleChange = (e) => {
-    setQuery(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(query);
-  };
-
   return (
-    <header>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Search images and photos"
-          value={query}
-          onChange={handleChange}
-        />
-        <button type="submit">Search</button>
-      </form>
+    <header className={css.barHeader}>
+      <Formik
+        initialValues={{ query: "" }}
+        onSubmit={(values, { resetForm }) => {
+          onSubmit(values.query);
+          resetForm();
+        }}
+      >
+        <Form>
+          <Field
+            type="text"
+            name="query"
+            placeholder="Search images and photos"
+          />
+          <button type="submit">Search</button>
+        </Form>
+      </Formik>
     </header>
   );
 };

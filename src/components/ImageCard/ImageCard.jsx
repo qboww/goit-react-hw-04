@@ -1,4 +1,5 @@
 import React from "react";
+import css from "./ImageCard.module.css"
 
 const ImageCard = ({ image, openModal }) => {
   const handleClick = () => {
@@ -7,7 +8,11 @@ const ImageCard = ({ image, openModal }) => {
 
   return (
     <div onClick={handleClick}>
-      <img src={image.urls.small} alt={image.alt_description} />
+      <img
+        src={image.urls.small}
+        alt={image.alt_description}
+        className={css.imageContainer}
+      />
     </div>
   );
 };
