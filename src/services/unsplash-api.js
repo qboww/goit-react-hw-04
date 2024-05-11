@@ -13,7 +13,8 @@ async function fetchImages(searchQuery, page) {
 
   try {
     const response = await axios.get(`${baseUrl}?${params}`);
-    return response.data.results;
+    const { results, total } = response.data;
+    return { results, total };
   } catch (error) {
     console.log(error);
   }

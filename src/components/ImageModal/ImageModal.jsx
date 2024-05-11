@@ -1,28 +1,25 @@
 import React from "react";
 import ReactModal from "react-modal";
-import css from './ImageModal.module.css'
-
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    padding: "16",
-  },
-};
+import css from "./ImageModal.module.css";
 
 const ImageModal = ({ isOpen, closeModal, image }) => {
   return (
     <ReactModal
       isOpen={isOpen}
       onRequestClose={closeModal}
-      style={customStyles}
+      shouldCloseOnEsc={true}
+      overlayClassName={css.Overlay}
+      className={css.Modal}
     >
-      <div>
-        <img src={image.urls.regular} alt="Selected" className={css.imgContainer} />
+      <div className={css.modalContent}>
+        
+        {image && (
+          <img
+            src={image.urls.regular}
+            alt="Selected"
+            className={css.imgContainer}
+          />
+        )}
       </div>
     </ReactModal>
   );
