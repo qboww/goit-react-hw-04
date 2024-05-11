@@ -21,7 +21,7 @@
 
 .galleryList img {
   width: 100%;
-  height: 160px;
+  height: 150px;
   object-fit: cover;
   display: block;
 }
